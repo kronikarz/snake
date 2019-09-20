@@ -3,14 +3,11 @@ let ctx = canvas.getContext("2d");
 
 let directionStr = `Right`;
 let gameStartBoolean = true;
-let gameOverBoolean = false;
+let timeoutInt = 100;
 
 const AREA_WIDTH_INT = canvas.width;
 const AREA_HEIGHT_INT = canvas.height;
 const SNAKE_STEP_INT = 10;
-
-let timeoutInt = 100;
-const MY_TIMER = setInterval(main, timeoutInt);
 
 window.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
@@ -45,25 +42,27 @@ window.addEventListener("keydown", function (event) {
 
 }, true);
 
+//setInterval is making main() loop
+const MY_TIMER = setInterval(main, timeoutInt);
+
 function main() {
   moveHeadPosition(directionStr, SNAKE_STEP_INT);
   checkCollisionWithArena();
   checkCollisionWithBody();
-  if (!gameOverBoolean) {
-    ctx.clearRect(0, 0, AREA_WIDTH_INT, AREA_HEIGHT_INT);
-    drawHead();
-    moveBodyPosition();
-    drawBody();
 
-    if (isFoodEaten()) {
-      extendBody();
-      calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
-    } else if (gameStartBoolean) {
-      calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
-      gameStartBoolean = false;
-    }
-    drawFood();
+  ctx.clearRect(0, 0, AREA_WIDTH_INT, AREA_HEIGHT_INT);
+  drawHead();
+  moveBodyPosition();
+  drawBody();
+
+  if (isFoodEaten()) {
+    extendBody();
+    calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
+  } else if (gameStartBoolean) {
+    calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
+    gameStartBoolean = false;
   }
+  drawFood();
 }
 
 function drawHead() {
@@ -108,7 +107,6 @@ function checkCollisionWithArena() {
     || getHeadPosition().yCenter > AREA_HEIGHT_INT
     || getHeadPosition().yCenter < 0) {
     clearTimeout(MY_TIMER);
-    gameOverBoolean = true;
   }
 }
 
@@ -116,9 +114,7 @@ function checkCollisionWithBody() {
   for (let i = 0; i < body.length; i++) {
     if (getHeadPosition().xCenter === getBodyPosition().xCenter[i]
       && getHeadPosition().yCenter === getBodyPosition().yCenter[i]) {
-
       clearTimeout(MY_TIMER);
-      gameOverBoolean = true;
     }
   }
 }
