@@ -9,6 +9,12 @@ function getBodyPosition() {
   return body.position;
 }
 
+function resetBodyPosition() {
+  body.position.xCenter = [25, 15];
+  body.position.yCenter = [15, 15];
+  body.length = 2;
+}
+
 function moveBodyPosition() {
   calculateBodyPosition();
   body.position.xCenter.pop();

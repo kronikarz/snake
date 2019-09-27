@@ -1,13 +1,23 @@
 let canvas = document.getElementById("canvasGameArea");
 let ctx = canvas.getContext("2d");
 
-let directionStr = `Right`;
-let gameStartBoolean = true;
-let timeoutInt = 100;
-
 const AREA_WIDTH_INT = canvas.width;
 const AREA_HEIGHT_INT = canvas.height;
 const SNAKE_STEP_INT = 10;
+const SPEED_TIMEOUT = [900, 900, 800, 700, 600, 500, 400, 300, 200, 100];
+
+const scoreInput = document.getElementById("scoreInput");
+const startBtn = document.getElementById("startBtn");
+startBtn.addEventListener("click", function () {
+  init();
+});
+
+let directionStr = `Right`;
+let gameStartBoolean = true;
+let GAME_LOOP;
+let scoreIncrement = 1;
+let score = 0;
+let timeoutInt = SPEED_TIMEOUT[1];
 
 window.addEventListener("keydown", function (event) {
   if (event.defaultPrevented) {
@@ -42,8 +52,24 @@ window.addEventListener("keydown", function (event) {
 
 }, true);
 
+function chooseSpeed(speed) {
+  timeoutInt = SPEED_TIMEOUT[speed];
+  scoreIncrement = speed;
+  init();
+}
+
 //setInterval is making main() loop
-const MY_TIMER = setInterval(main, timeoutInt);
+function init() {
+  resetHeadPosition();
+  resetBodyPosition();
+  resetFoodPosition();
+  score = 0;
+  scoreInput.value = score.toString();
+  gameStartBoolean = true;
+  canvas.focus();
+  clearTimeout(GAME_LOOP);
+  GAME_LOOP = setInterval(main, timeoutInt);
+}
 
 function main() {
   moveHeadPosition(directionStr, SNAKE_STEP_INT);
@@ -57,6 +83,8 @@ function main() {
 
   if (isFoodEaten()) {
     extendBody();
+    score += scoreIncrement;
+    scoreInput.value = score.toString();
     calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
   } else if (gameStartBoolean) {
     calculateFoodPosition(AREA_WIDTH_INT, AREA_HEIGHT_INT);
@@ -106,7 +134,7 @@ function checkCollisionWithArena() {
     || getHeadPosition().xCenter < 0
     || getHeadPosition().yCenter > AREA_HEIGHT_INT
     || getHeadPosition().yCenter < 0) {
-    clearTimeout(MY_TIMER);
+    clearTimeout(GAME_LOOP);
   }
 }
 
@@ -114,7 +142,7 @@ function checkCollisionWithBody() {
   for (let i = 0; i < body.length; i++) {
     if (getHeadPosition().xCenter === getBodyPosition().xCenter[i]
       && getHeadPosition().yCenter === getBodyPosition().yCenter[i]) {
-      clearTimeout(MY_TIMER);
+      clearTimeout(GAME_LOOP);
     }
   }
 }

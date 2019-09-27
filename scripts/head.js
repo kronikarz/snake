@@ -44,6 +44,17 @@ function getLastHeadPosition() {
   return head.lastPosition;
 }
 
+function resetHeadPosition() {
+  head.position.xCenter = 35;
+  head.position.yCenter = 15;
+  head.position.x1 = 0;
+  head.position.y1 = 0;
+  head.position.x2 = 0;
+  head.position.y2 = 0;
+  head.position.x3 = 0;
+  head.position.y3 = 0;
+}
+
 function moveHeadPosition(directionStr, speedInt) {
   switch (directionStr) {
     case `Right`: // IE/Edge specific value

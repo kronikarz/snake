@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Snake</title>
-	<link href="./styles/index.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8">
+  <title>Snake</title>
+  <link href="./styles/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<canvas id="canvasGameArea"></canvas>
+<div id="gameArenaDiv">
+  <canvas id="canvasGameArea" tabindex=0></canvas>
+</div>
+
+<div id="navigationDiv">
+  <div id="scoreDiv">
+    <label>Score: </label>
+    <input id="scoreInput" readonly="true" value="0" size="2" />
+  </div>
+  <p>
+    Press start and play the game!
+  </p>
+  <div id="startDiv">
+    <button id="startBtn">START</button>
+  </div>
+
+  <p>
+    Choose snake speed:
+  </p>
+  <div id="speedDiv">
+    <button id="speedOne" onclick="chooseSpeed(1)">1</button>
+    <button id="speedTwo" onclick="chooseSpeed(2)">2</button>
+    <button id="speedThree" onclick="chooseSpeed(3)">3</button>
+    <button id="speedFour" onclick="chooseSpeed(4)">4</button>
+    <button id="speedFive" onclick="chooseSpeed(5)">5</button>
+    <button id="speedSix" onclick="chooseSpeed(6)">6</button>
+    <button id="speedSeven" onclick="chooseSpeed(7)">7</button>
+    <button id="speedEight" onclick="chooseSpeed(8)">8</button>
+    <button id="speedNine" onclick="chooseSpeed(9)">9</button>
+  </div>
+</div>
+
 <script src="./scripts/main.js" type="text/javascript"></script>
 <script src="./scripts/head.js" type="text/javascript"></script>
 <script src="./scripts/body.js" type="text/javascript"></script>

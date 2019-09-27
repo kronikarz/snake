@@ -8,6 +8,11 @@ function getFoodPosition() {
   return food.position;
 }
 
+function resetFoodPosition() {
+  food.position.xCenter = 0;
+  food.position.yCenter = 0;
+}
+
 function calculateFoodPosition(areaWidth, areaHeight) {
   food.position.xCenter = calculatePositionRecursive(areaWidth, getHeadPosition().xCenter, getBodyPosition().xCenter);
   food.position.yCenter = calculatePositionRecursive(areaHeight, getHeadPosition().yCenter, getBodyPosition().yCenter);
